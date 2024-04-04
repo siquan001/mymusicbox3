@@ -1,0 +1,269 @@
+@import url(https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&family=Noto+Sans+SC:wght@100..900&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap);
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    position: absolute;
+    top:0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    font-family: 'Noto Sans SC','Noto Sans JP', sans-serif;
+    overflow: hidden;
+}
+
+.page{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top:0;
+    left:0;
+    opacity: 0;
+    transition: opacity .2s;
+}
+
+.page.ready{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    opacity: 1;
+}
+.page.ready h1{
+    font-size: 40px;
+}
+
+.page.ready .state{
+    height: 40px;
+    line-height: 40px;
+    margin: 20px 0;
+}
+.page.ready .state.loading{
+    animation: blink 1.5s infinite linear;
+}
+.page.ready .state.error{
+    color:red;
+}
+
+@keyframes blink {
+    0% {opacity: 1;}
+    50% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+.page.groups{
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.group-list{
+    max-width: 1000px;
+    padding: 20px 0;
+    overflow: hidden;
+    margin: 0 auto;
+}
+.group-list .group-item{
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+    float: left;
+    margin: 10px;
+    box-shadow: #aaa 0 1px 5px;
+    position: relative;
+    transition: all .3s;
+}
+.group-list .group-item .imgbox{
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+}
+.group-list .group-item .imgbox img{
+    width:100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    transition: all .3s;
+}
+.group-list .group-item .info{
+    width: 300px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    position: absolute;
+    bottom:0;
+    left: 0;
+    transition: all .3s;
+}
+body.dark .group-list .group-item .info{
+    background-color: rgba(0,0,0,.6);
+}
+.group-list .group-item .info .title{
+    font-size:20px;
+    font-weight: 500;
+    padding:0 10px;
+    line-height: 50px;
+}
+.group-list .group-item .info .desc{
+    font-size:14px;
+    padding:0 10px;
+}
+.group-list .group-item:hover{
+    box-shadow: #888 0 1px 7px;
+}
+.group-list .group-item:hover img{
+    transform: scale(1.1);
+}
+.group-list .group-item:hover .info{
+    height:80px;
+}
+@media(max-width: 1000px){
+    .group-list{
+        width:660px;
+    }
+}
+@media(max-width: 660px){
+    .group-list{
+        width:320px;
+    }
+    .page.songs .group-info{
+        display:none!important;
+    }
+    .page.songs .song-list{
+        width:100%!important;
+    }
+    .page.songs .song-list .control{
+        padding-left: 50px;
+        width: calc(100% - 50px);
+    }
+}
+.page.songs .back{
+    position: absolute;
+    top:0px;
+    left:0px;
+    font-size: 30px;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+}
+.page.songs .group-info{
+    width:400px;
+    height: calc(100% - 100px);
+    padding: 50px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    float: left;
+
+}
+.page.songs .group-info .cover{
+    width: 300px;
+    height: 300px;
+    border-radius: 15px;
+    overflow: hidden;
+}
+.page.songs .group-info .cover img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+}
+.page.songs .group-info .name{
+    font-size: 30px;
+    font-weight: 500;
+    margin: 20px 0;
+}
+.page.songs .song-list{
+    width: calc(100% - 401px);
+    height: 100%;
+    float: left;
+    overflow: hidden;
+    border-left: 1px solid #eee;
+}
+body.dark .page.songs .song-list{
+    border-left: 1px solid #555;
+}
+.page.songs .song-list .control{
+    width: 100%;
+    height: 50px;
+    box-shadow: #aaa 0 1px 5px;
+}
+.page.songs .song-list .control>*{
+    height: 30px;
+    margin: 10px 0;
+    float: left;
+    cursor: pointer;
+}
+.page.songs .song-list .control .sort{
+    width: 30px;
+    margin-left: 10px;
+}
+.page.songs .song-list .list{
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100% - 50px);
+    width: 100%;
+}
+.page.songs .song-list .list .item{
+    width: calc(100% - 20px);
+    height: 50px;
+    overflow: hidden;
+    padding:0 10px;
+    transition: all .3s;
+}
+.page.songs .song-list .list .item.active{
+    color:#09f;
+}
+.page.songs .song-list .list .item .name{
+    line-height: 50px;
+    font-size: 16px;
+    transition: all .3s;
+}
+.page.songs .song-list .list .item .artist{
+    line-height: 16px;
+    font-size: 12px;
+}
+.page.songs .song-list .list .item:hover{
+    background-color: #eee;
+}
+body.dark .page.songs .song-list .list .item:hover{
+    background-color: #555;
+}
+.page.songs .song-list .list .item:hover .name{
+    line-height: 30px;
+}
+.playing-mini{
+    width: 80px;
+    height: 60px;
+    border-bottom-left-radius: 60px;
+    border-top-left-radius: 60px;
+    box-shadow: #aaa 0 1px 5px;
+    position: absolute;
+    top:20px;
+    right:-80px;
+    background-color: #fff;
+    transition: all .3s;
+}
+body.dark .playing-mini{
+    background-color: #555;
+}
+.playing-mini .img{
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+    position: relative;
+}
+.playing-mini .img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    border-radius: 50%;
+}
+.playing-mini .playing{
+    animation:rotate 10s infinite linear;
+}
