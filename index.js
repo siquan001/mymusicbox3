@@ -270,7 +270,7 @@ var sp = {
     },
     initer: {
         initMusicList: function () {
-            fetch('https://siquan001.github.io/mymusicbox2/musiclist.json').then(function (res) {
+            fetch('https://siquan001.github.io/mymusicbox2/musiclist-min.json').then(function (res) {
                 return res.json();
             }).then(function (data) {
                 sp.musiclist = data;
@@ -727,7 +727,7 @@ font-size:${h * 0.024 * 0.75}px;
 
             // 音乐播放器元素事件（除拖动条）
             function initPlayerEvents() {
-                el.img.onerror =$('.playing-mini img')= function () {
+                el.img.onerror =$('.playing-mini img').onerror= function () {
                     this.src = defimg;
                 }
 
