@@ -722,7 +722,7 @@ font-size:${h * 0.024 * 0.75}px;
 
             // 音乐播放器元素事件（除拖动条）
             function initPlayerEvents() {
-                el.img.onerror = function () {
+                el.img.onerror =$('.playing-mini img')= function () {
                     this.src = defimg;
                 }
 
