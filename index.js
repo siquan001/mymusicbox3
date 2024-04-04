@@ -68,6 +68,11 @@ var sp = {
         img: "https://p2.music.126.net/TiRbDelt4zvPTiqsEJ8V2w==/109951168153720614.jpg?param=300x300",
         has: ['tag=灰澈']
     }, {
+        name: "SP.? 精选集",
+        desc: "这歌不对劲",
+        img: "http://p1.music.126.net/DwWVQH2lsnqJEpeUiNaCZA==/109951164416460276.jpg?param=300x300",
+        has: ['tag=...']
+    }, {
         name: "李昕融 精选集",
         desc: "小时候喜欢李昕融，现在没那么喜欢了",
         img: "https://y.gtimg.cn/music/photo_new/T002R300x300M000004fM07G1uBKoR.jpg",
