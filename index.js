@@ -265,7 +265,7 @@ var sp = {
     },
     initer: {
         initMusicList: function () {
-            fetch('./musiclist.json').then(function (res) {
+            fetch('https://siquan001.github.io/mymusicbox2/musiclist.json').then(function (res) {
                 return res.json();
             }).then(function (data) {
                 sp.musiclist = data;
