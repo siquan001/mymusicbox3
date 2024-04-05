@@ -283,6 +283,7 @@ var musicapi = {
     } catch (e) { }
     return {
       abort: function () {
+        console.log('XHR Aborted[url:'+url+']');
         xhr.abort();
       }
     }

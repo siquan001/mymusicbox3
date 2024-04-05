@@ -27,57 +27,7 @@ var sp = {
         }
     },
     musiclist: null,
-    mgroups: [{
-        name: "所有音乐",
-        desc: "音乐盒子的所有音乐列表",
-        img: "https://p2.music.126.net/hVpp2RXEtvsgvevE5b3tcA==/109951165409657142.jpg?param=300x300",
-        has: ['*']
-    }, {
-        name: "特别喜欢",
-        desc: "我特别喜欢的音乐",
-        img: "https://p1.music.126.net/NPveskRNRWFL9cUkO2I7hA==/109951164795566364.jpg?param=300x300",
-        has: ['tag=特别喜欢']
-    }, {
-        name: "日文 精选集",
-        desc: "正在逐渐接受日文歌曲中。。。",
-        img: "https://p1.music.126.net/rO-NRerWNFHke7whEJRJbg==/109951166940350080.jpg?param=300x300",
-        has: ['tag=日文']
-    }, {
-        name: "英文 精选集",
-        desc: "我喜欢的一些英文歌",
-        img: "https://y.gtimg.cn/music/photo_new/T002R300x300M000004cELYr2cDgEy.jpg",
-        has: ['tag=英文']
-    }, {
-        name: "Warma 精选集",
-        desc: "我已经完全爱上沃玛啦！！！",
-        img: "https://p1.music.126.net/iJ0L0bu8NT--85sIwKdYOg==/109951168152358562.jpg?param=300x300",
-        has: ['tag=Warma']
-    }, {
-        name: "纯音乐",
-        desc: "纯音乐，享受音乐本身",
-        img: "https://p2.music.126.net/wuBe3K5odyEqZBLZNkXNlg==/109951163855629724.jpg?param=300x300",
-        has: ['tag=纯音乐']
-    }, {
-        name: "Phigros 精选集",
-        desc: "Phigros的一些音乐还是很好听的",
-        img: "https://p2.music.126.net/KhOcpa-kpM1sG7jI5iZW1w==/109951169259187894.jpg",
-        has: ['tag=Phigros']
-    }, {
-        name: "灰澈 精选集",
-        desc: "灰澈的纯音乐总是给人一种宁静、放松的感觉",
-        img: "https://p2.music.126.net/TiRbDelt4zvPTiqsEJ8V2w==/109951168153720614.jpg?param=300x300",
-        has: ['tag=灰澈']
-    }, {
-        name: "SP.? 精选集",
-        desc: "这歌不对劲",
-        img: "http://p1.music.126.net/DwWVQH2lsnqJEpeUiNaCZA==/109951164416460276.jpg?param=300x300",
-        has: ['tag=...']
-    }, {
-        name: "李昕融 精选集",
-        desc: "小时候喜欢李昕融，现在没那么喜欢了",
-        img: "https://y.gtimg.cn/music/photo_new/T002R300x300M000004fM07G1uBKoR.jpg",
-        has: ['matchArtist=李昕融']
-    }],
+    mgroups: null,
     ready: {
         isReady: false,
         setState: function (text, type) {
@@ -91,10 +41,20 @@ var sp = {
                 if (sp.ready.isReady) {
                     sp.util.switchPage('groups');
                     if(localStorage.spNowplay&&localStorage.spMusiclist){
-                        sp.player.nowlistid=parseInt(localStorage.spMusiclist);
-                        sp.player.musiclist=sp.mgroups[sp.player.nowlistid].songs;
-                        sp.player.play(parseInt(localStorage.spNowplay));
-                        $('.playing-mini').style.right='0px';
+                        var nowlistid=parseInt(localStorage.spMusiclist);
+                        var musiclist=sp.mgroups[nowlistid].songs;
+                        var mid=localStorage.spNowplay;
+                        for(var i=0;i<musiclist.length;i++){
+                            if(musiclist[i].mid==mid){
+                                sp.player.nowlistid=nowlistid;
+                                sp.player.musiclist=musiclist;
+                                sp.player.play(i);
+                                $('.playing-mini').style.right='0px';
+                                return;
+                            }
+                        }
+                        delete localStorage.spMusiclist;
+                        delete localStorage.spNowplay;
                     }
                 }
             });
@@ -209,36 +169,15 @@ var sp = {
     },
     songs: {
         nowlist: null,
+        nowgroup:null,
         to: function (index) {
             this.nowlist = index;
             sp.util.switchPage('songs');
-            var group = sp.mgroups[index];
+            var group = this.getGroup(index);
             $('.page.songs .cover img').src = group.img;
             $('.page.songs .group-info .name').innerText = group.name;
             $('.page.songs .group-info .desc').innerText = group.desc;
-            var h = '';
-            group.songs.forEach(function (song, i) {
-                h += `<div class="item" data-index="${i}">
-                <div class="name">${song.name}</div>
-                <div class="artist">${song.artist}</div>
-            </div>`
-            })
-            $('.page.songs .list').innerHTML = h;
-            if(index==sp.player.nowlistid){
-                this.actItem(sp.player.nowplay);
-            }
-            $('.page.songs .list .item',true).forEach(function(item){
-                item.addEventListener('click',function(){
-                    sp.player.nowlistid=sp.songs.nowlist;
-                    sp.player.musiclist=sp.mgroups[sp.songs.nowlist].songs;
-                    sp.player.play(parseInt(this.getAttribute('data-index')));
-                    sp.util.switchPage('player');
-                    $('.playing-mini').style.right='';
-                    if(this.querySelector('.name').innerText.trim()=='DESTRUCTION 3,2,1'){
-                        sp.player.sp();
-                    }
-                })
-            });
+            this.drawList(group,index);
             try{
                 $('.page.songs .active').scrollIntoView({
                     behavior: 'smooth',
@@ -248,39 +187,133 @@ var sp = {
                 console.log(e);
             }
         },
+        getGroup:function(i){
+            if(typeof i=='undefined'){
+                i=this.nowlist;
+            }
+            return JSON.parse(JSON.stringify(sp.mgroups[i]));
+        },
+        drawList:function(group,index){
+            var h = '';
+            group.songs=this.sortList(group.songs);
+            this.nowgroup=group;
+            group.songs.forEach(function (song, i) {
+                h += `<div class="item" data-index="${i}" data-mid="${song.mid}">
+                <div class="name">${song.name}</div>
+                <div class="artist">${song.artist}</div>
+            </div>`
+            })
+            $('.page.songs .list').innerHTML = h;
+            if(index==sp.player.nowlistid){
+                this.actItem(sp.player.mid);
+            }
+            $('.page.songs .list .item',true).forEach(function(item){
+                item.addEventListener('click',function(){
+                    sp.player.nowlistid=sp.songs.nowlist;
+                    sp.player.musiclist=sp.songs.nowgroup.songs;
+                    sp.player.play(parseInt(this.getAttribute('data-index')));
+                    sp.util.switchPage('player');
+                    $('.playing-mini').style.right='';
+                    if(this.querySelector('.name').innerText.trim()=='DESTRUCTION 3,2,1'){
+                        sp.player.sp();
+                    }
+                })
+            });
+        },
+        sortList:function(group){
+            var {mode,sort}=this.getSortMode();
+            if(mode==1){
+                group.sort(function(a,b){
+                    return a.name.localeCompare(b.name);
+                })
+            }
+            if(sort==1){
+                group.reverse();
+            }
+            console.log(mode,sort);
+            console.log(group);
+            return group;
+        },
+        getSortMode:function(){
+            var sort=parseInt(localStorage.spSort);
+            sort=isNaN(sort)?0:sort;
+            var mode=parseInt(localStorage.spSortMode);
+            mode=isNaN(mode)?0:mode;
+            return {mode,sort};
+        },
         init: function () {
             $('.page.songs .back').addEventListener('click', function () {
                 sp.util.switchPage('groups');
                 sp.songs.nowlist = null;
                 $('.page.songs .list').innerHTML = '';
+            });
+            var {mode,sort}=this.getSortMode();
+            var sortEl=$('.page.songs .control .sort');
+            var modeEl=$('.page.songs .control .mode');
+            sortEl.innerText=['↓','↑'][sort];
+            modeEl.innerText=['默认','字母'][mode];
+            sortEl.addEventListener('click',function(){
+                sort=sort==0?1:0;
+                sortEl.innerText=['↓','↑'][sort];
+                localStorage.spSort=sort;
+                sp.songs.drawList(sp.songs.getGroup(),sp.songs.nowlist);
+                sp.player.musiclist=sp.songs.nowgroup.songs;
+                sp.player.nowplay=parseInt($('.page.songs .list .item.active').getAttribute('data-index'));
+            })
+            modeEl.addEventListener('click',function(){
+                mode=mode==0?1:0;
+                modeEl.innerText=['默认','字母'][mode];
+                localStorage.spSortMode=mode;
+                sp.songs.drawList(sp.songs.getGroup(),sp.songs.nowlist);
+                sp.player.musiclist=sp.songs.nowgroup.songs;
+                sp.player.nowplay=parseInt($('.page.songs .list .item.active').getAttribute('data-index'));
             })
         },
-        actItem:function(i){
+        actItem:function(mid){
             try {
                 $('.page.songs .list .item',true).forEach(function(item){
                     item.className = 'item';
                 })
-                $('.page.songs .list .item[data-index="'+i+'"]').className = 'item active';
+                $('.page.songs .list .item[data-mid="'+mid+'"]').className = 'item active';
             } catch (error) {
                 console.log(error);
-                console.log(i);
+                console.log(mid);
             }
            
         }
     },
     initer: {
+        initState:0,
         initMusicList: function () {
             fetch('https://siquan001.github.io/mymusicbox2/musiclist-min.json').then(function (res) {
                 return res.json();
             }).then(function (data) {
                 sp.musiclist = data;
-                sp.ready.isReady = true;
-                sp.ready.setState('点击进入');
-                sp.groups.init();
+                sp.initer.initState++;
+                sp.initer.finish();
             }).catch(function (err) {
                 sp.ready.setState('加载歌单失败', 'error');
                 console.log(err);
             })
+        },
+        initGroups:function(){
+            fetch('./group-min.json').then(function (res) {
+                return res.json();
+            }).then(function (data) {
+                sp.mgroups = data;
+                sp.initer.initState++;
+                sp.initer.finish();
+            }).catch(function (err) {
+                sp.ready.setState('加载歌单组失败', 'error');
+                console.log(err);
+            })
+        },
+        finish:function(){
+            if(this.initState==2){
+                sp.ready.isReady = true;
+                sp.ready.setState('点击进入');
+                sp.groups.init();
+            }
         }
     },
     player: {
@@ -452,8 +485,10 @@ var sp = {
         },
         resize:function resize() {
             var resizer = document.querySelector("#resizer");
-            var w = window.innerWidth;
-            var h = window.innerHeight;
+            var w = document.documentElement.clientWidth;
+            var h = document.documentElement.clientHeight;
+            document.body.style.width=w+'px';
+            document.body.style.height=h+'px';
             if (w < 700) {
                 resizer.innerHTML = '';
                 return;
@@ -547,6 +582,7 @@ font-size:${h * 0.024 * 0.75}px;
         },
         rs:[],
         nowplay:-1,
+        mid:null,
         musiclist:null,
         init: function () {
             var old_d=window.document;
@@ -555,6 +591,7 @@ font-size:${h * 0.024 * 0.75}px;
                 return old_d.getElementById(id);
             }
             document.body=old_d.body;
+            document.documentElement=old_d.documentElement;
             document.head=old_d.head;
             document.createElement=function(tag){
                 return old_d.createElement(tag);
@@ -573,12 +610,13 @@ font-size:${h * 0.024 * 0.75}px;
                     r.abort();
                 })
                 sp.player.nowplay = i;
+                sp.player.mid = sp.player.musiclist[i].mid;
                 redef();
-                sp.songs.actItem(i);
+                sp.songs.actItem(sp.player.mid);
                 xrLRC();
                 setSongData(i);
                 setTagAndInfo(i);
-                localStorage.spNowplay=i;
+                localStorage.spNowplay=sp.player.musiclist[i].mid;
                 localStorage.spMusiclist=sp.player.nowlistid;
             }
             
@@ -605,7 +643,7 @@ font-size:${h * 0.024 * 0.75}px;
                 // 在i=-1时播放url的音乐信息
                 sp.player.rs.push(musicapi.get(i == -1 ? lssong : sp.player.musiclist[i], function (data) {
                     if (data.error) {
-                        notice('歌曲获取失败', function () {
+                        sp.player.notice('歌曲获取失败', function () {
                             alert(data.error);
                         });
                         //歌曲获取失败切下一首
@@ -1018,6 +1056,7 @@ font-size:${h * 0.024 * 0.75}px;
         sp.ready.setState('正在加载歌单...', 'loading');
         this.ready.init();
         this.initer.initMusicList();
+        this.initer.initGroups();
         this.songs.init();
         this.player.init();
         $('.playing-mini').addEventListener('click',function(){
