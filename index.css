@@ -230,15 +230,20 @@ body.dark .page.songs .song-list{
 .page.songs .song-list .list .item .artist{
     line-height: 16px;
     font-size: 12px;
+    display: none;
 }
 .page.songs .song-list .list .item:hover{
     background-color: #eee;
 }
+
 body.dark .page.songs .song-list .list .item:hover{
     background-color: #555;
 }
 .page.songs .song-list .list .item:hover .name{
     line-height: 30px;
+}
+.page.songs .song-list .list .item:hover .artist{
+    display:block;
 }
 .playing-mini{
     width: 80px;

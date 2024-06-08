@@ -797,7 +797,7 @@ font-size:${h * 0.024 * 0.75}px;
                 el.lastbtn.addEventListener('click', function () {
                     if (sp.player.nowplay == -1) return;
                     if (switchMode == 2) {
-                        play(Math.floor(Math.random() * musiclist.length));
+                        play(Math.floor(Math.random() * sp.player.musiclist.length));
                     } else {
                         if (sp.player.nowplay == 0) {
                             play(sp.player.musiclist.length - 1);
