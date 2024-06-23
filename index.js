@@ -27,6 +27,7 @@ var sp = {
         }
     },
     musiclist: null,
+    infolist: null,
     mgroups: null,
     ready: {
         isReady: false,
@@ -285,7 +286,7 @@ var sp = {
     initer: {
         initState:0,
         initMusicList: function () {
-            fetch('https://siquan001.github.io/mymusicbox2/musiclist-min.json').then(function (res) {
+            fetch('/mymusicbox2/musiclist-min.json').then(function (res) {
                 return res.json();
             }).then(function (data) {
                 sp.musiclist = data;
@@ -308,8 +309,20 @@ var sp = {
                 console.log(err);
             })
         },
+        initInfos:function(){
+            fetch('/mymusicbox2/info.json').then(function (res) {
+                return res.json();
+            }).then(function (data) {
+                sp.infolist = data;
+                sp.initer.initState++;
+                sp.initer.finish();
+            }).catch(function (err) {
+                sp.ready.setState('加载歌曲评价失败', 'error');
+                console.log(err);
+            })
+        },
         finish:function(){
-            if(this.initState==2){
+            if(this.initState==3){
                 sp.ready.isReady = true;
                 sp.ready.setState('点击进入');
                 sp.groups.init();
@@ -322,7 +335,7 @@ var sp = {
             INFO           : true,               // 显示你的评价 (取决于 INFO_ROOT/[mid].txt)
             TAG            : true,               // 显示歌曲标签 (取决于musiclist[i].tag)
             DEFAULT_MODE   : 'light',            // 默认模式 ，可选 light 亮色,dark 暗色
-            INFO_ROOT      : 'https://siquan001.github.io/mymusicbox2/info/',           // 评价文件夹根目录 (结尾要加“/”)
+            INFO_ROOT      : '/mymusicbox2/info/',           // 评价文件夹根目录 (结尾要加“/”)
             AUTOPLAY       : true,               // 自动播放
             START_PLAY     : 'random',            // 刚开始的播放策略，可选 random 随机播放，first 第一首播放
             PLAY_MODE      : 'loop',             // 播放模式，可选 loop 单曲循环，random 随机播放，order 顺序播放
@@ -629,17 +642,16 @@ font-size:${h * 0.024 * 0.75}px;
 
                 // 评价
                 if (i == -1 || !config.INFO || !config.ENABLED_MID) return;
-                sp.player.rs.push(musicapi._request(config.INFO_ROOT + sp.player.musiclist[i].mid + '.txt', function (data) {
-                    if (!data) {
-                        el.info.pj.innerText = '暂无';
-                    } else {
-                        el.info.pj.innerText = data;
-                    }
-                }))
+                el.info.pj.innerText=sp.infolist[sp.player.musiclist[i].mid]||'暂无';
             }
 
             // 获取并设置歌曲信息
             function setSongData(i) {
+                if(i>=0){
+                    el.title.innerText=el.info.title.innerText=sp.player.musiclist[i].name;
+                    document.title=_title=sp.player.musiclist[i].name;
+                    el.singer.innerText=el.info.singer.innerText=sp.player.musiclist[i].artist;
+                  }
                 // 在i=-1时播放url的音乐信息
                 sp.player.rs.push(musicapi.get(i == -1 ? lssong : sp.player.musiclist[i], function (data) {
                     if (data.error) {
@@ -687,7 +699,7 @@ font-size:${h * 0.024 * 0.75}px;
                     el.info.singer.innerText =
                     el.singer.innerText = '...';
                 el.audio.src = '';
-                LRC = { 0: '歌词加载中' };
+                LRC = { 0: '正在加载' };
             }
 
             // 重置歌词
@@ -815,6 +827,9 @@ font-size:${h * 0.024 * 0.75}px;
                     }
                     this.innerHTML = qhicon[switchMode];
                 });
+
+                
+
             }
 
             // 音乐播放器拖动条事件
@@ -918,6 +933,23 @@ font-size:${h * 0.024 * 0.75}px;
                 el.musicinfobtn.addEventListener('click', function () {
                     document.querySelector(".dialog.musicinfo").classList.add('show');
                 })
+                el.fullBtn.addEventListener('click',function(){
+                    if(old_d.fullscreenElement){
+                        old_d.exitFullscreen();
+                    }else{
+                        document.documentElement.requestFullscreen();
+                    }
+                })
+
+                old_d.addEventListener('fullscreenchange',function(){
+                    if(old_d.fullscreenElement){
+                        el.fullBtn.querySelector('.full').style.display='block';
+                        el.fullBtn.querySelector('.unfull').style.display='none';
+                    }else{
+                        el.fullBtn.querySelector('.unfull').style.display='block';
+                        el.fullBtn.querySelector('.full').style.display='none';
+                    }
+                })
             }
 
             // 对话框事件
@@ -955,7 +987,7 @@ font-size:${h * 0.024 * 0.75}px;
                     }
                 });
                 window.onfocus = function () {
-                    if (BLURBG && !isStopBlurBg) {
+                    if (config.BLURBG && !isStopBlurBg) {
                         clearInterval(xinnenginter);
                         checkxinnengInterval();
                     }
@@ -965,7 +997,7 @@ font-size:${h * 0.024 * 0.75}px;
                     activing = false;
                 }
                 window.onblur = function () {
-                    if (BLURBG && !isStopBlurBg) {
+                    if (config.BLURBG && !isStopBlurBg) {
                         clearInterval(xinnenginter);
                     }
                     document.title = "[性能模式冻结中]" + _title;
@@ -998,6 +1030,7 @@ font-size:${h * 0.024 * 0.75}px;
                 lastbtn:document.querySelector(".lastbtn"),
                 nextbtn:document.querySelector(".nextbtn"),
                 switchBtn:document.querySelector(".sx"),
+                fullBtn:document.querySelector(".full"),
                 mode:document.querySelector(".mode"),
                 musiclistbtn:document.getElementById("siquan-player-musiclist"),
                 musicinfobtn:document.getElementById("siquan-player-musicinfo"),
@@ -1056,6 +1089,7 @@ font-size:${h * 0.024 * 0.75}px;
         sp.ready.setState('正在加载歌单...', 'loading');
         this.ready.init();
         this.initer.initMusicList();
+        this.initer.initInfos();
         this.initer.initGroups();
         this.songs.init();
         this.player.init();

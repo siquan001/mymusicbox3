@@ -82,7 +82,7 @@
                         <div class="music-title" id="music-title">...</div>
                         <div class="music-message">
                             <div>歌手：<span id="music-singer">...</span></div>
-                            <div>专辑：<span id="music-album">...</span></div>
+                            <div style="display: none;">专辑：<span id="music-album">...</span></div>
                         </div>
                         <div class="music-singer-m" id="music-singer-m"></div>
                     </div>
@@ -119,6 +119,14 @@
                     <ul></ul>
                 </div>
                 <div class="flbtn">
+                    <div class="iconbtn full">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="unfull" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707m4.344-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707"/>
+                          </svg>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="full" style="display: none;" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M.172 15.828a.5.5 0 0 0 .707 0l4.096-4.096V14.5a.5.5 0 1 0 1 0v-3.975a.5.5 0 0 0-.5-.5H1.5a.5.5 0 0 0 0 1h2.768L.172 15.121a.5.5 0 0 0 0 .707M15.828.172a.5.5 0 0 0-.707 0l-4.096 4.096V1.5a.5.5 0 1 0-1 0v3.975a.5.5 0 0 0 .5.5H14.5a.5.5 0 0 0 0-1h-2.768L15.828.879a.5.5 0 0 0 0-.707"/>
+                          </svg>
+                    </div>
                     <div class="iconbtn mode"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                             fill="currentColor" class="bi bi-sun-fill" viewBox="0 0 16 16">
                             <path
@@ -168,7 +176,7 @@
         </div>
     </div>
 </body>
-<script src="https://siquan001.github.io/mymusicbox2/musicapi-min.js"></script>
+<script src="/mymusicbox2/musicapi-min.js"></script>
 <script src="./index-min.js"></script>
 
 </html>

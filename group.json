@@ -70,13 +70,5 @@
         "has": [
             "tag=..."
         ]
-    },
-    {
-        "name": "李昕融 精选集",
-        "desc": "小时候喜欢李昕融，现在没那么喜欢了",
-        "img": "https://y.gtimg.cn/music/photo_new/T002R300x300M000004fM07G1uBKoR.jpg",
-        "has": [
-            "matchArtist=李昕融"
-        ]
     }
 ]
