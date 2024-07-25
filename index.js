@@ -227,12 +227,14 @@ var sp = {
                 group.sort(function(a,b){
                     return a.name.localeCompare(b.name);
                 })
+            }else if(mode==2){
+                group.sort(function(a,b){
+                    return a.artist.localeCompare(b.artist);
+                })
             }
             if(sort==1){
                 group.reverse();
             }
-            console.log(mode,sort);
-            console.log(group);
             return group;
         },
         getSortMode:function(){
@@ -252,22 +254,24 @@ var sp = {
             var sortEl=$('.page.songs .control .sort');
             var modeEl=$('.page.songs .control .mode');
             sortEl.innerText=['↓','↑'][sort];
-            modeEl.innerText=['默认','字母'][mode];
+            modeEl.innerText=['默认','字母','歌手'][mode];
             sortEl.addEventListener('click',function(){
                 sort=sort==0?1:0;
                 sortEl.innerText=['↓','↑'][sort];
                 localStorage.spSort=sort;
                 sp.songs.drawList(sp.songs.getGroup(),sp.songs.nowlist);
                 sp.player.musiclist=sp.songs.nowgroup.songs;
-                sp.player.nowplay=parseInt($('.page.songs .list .item.active').getAttribute('data-index'));
+                var act=$('.page.songs .list .item.active');
+                if(act)sp.player.nowplay=parseInt(act.getAttribute('data-index'));
             })
             modeEl.addEventListener('click',function(){
-                mode=mode==0?1:0;
-                modeEl.innerText=['默认','字母'][mode];
+                mode=mode==0?1:(mode==1?2:0);
+                modeEl.innerText=['默认','字母','歌手'][mode];
                 localStorage.spSortMode=mode;
                 sp.songs.drawList(sp.songs.getGroup(),sp.songs.nowlist);
                 sp.player.musiclist=sp.songs.nowgroup.songs;
-                sp.player.nowplay=parseInt($('.page.songs .list .item.active').getAttribute('data-index'));
+                var act=$('.page.songs .list .item.active');
+                if(act)sp.player.nowplay=parseInt(act.getAttribute('data-index'));
             })
         },
         actItem:function(mid){

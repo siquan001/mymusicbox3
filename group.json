@@ -50,9 +50,17 @@
     {
         "name": "Phigros 精选集",
         "desc": "Phigros的一些音乐还是很好听的",
-        "img": "https://p2.music.126.net/KhOcpa-kpM1sG7jI5iZW1w==/109951169259187894.jpg",
+        "img": "https://p2.music.126.net/KhOcpa-kpM1sG7jI5iZW1w==/109951169259187894.jpg?param=300x300",
         "has": [
             "tag=Phigros"
+        ]
+    },
+    {
+        "name": "罗小黑战记 精选集",
+        "desc": "喵~",
+        "img": "https://y.gtimg.cn/music/photo_new/T002R300x300M000000lKfvl0dHqmB.jpg",
+        "has": [
+            "tag=罗小黑战记"
         ]
     },
     {
@@ -66,9 +74,17 @@
     {
         "name": "SP.? 精选集",
         "desc": "这歌不对劲",
-        "img": "http://p1.music.126.net/DwWVQH2lsnqJEpeUiNaCZA==/109951164416460276.jpg?param=300x300",
+        "img": "https://p1.music.126.net/DwWVQH2lsnqJEpeUiNaCZA==/109951164416460276.jpg?param=300x300",
         "has": [
             "tag=..."
+        ]
+    },
+    {
+        "name": "甜歌 精选集",
+        "desc": "收藏在本歌单的歌曲还是比较少的",
+        "img": "https://p1.music.126.net/wE12nFuZ2_CaqojUpiYYsg==/109951167148108866.jpg?param=300x300",
+        "has": [
+            "tag=甜歌"
         ]
     }
 ]
