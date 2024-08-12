@@ -40,6 +40,14 @@
         ]
     },
     {
+        "name": "PIKA 精选集",
+        "desc": "PIKASONIC！！！宝藏！！！",
+        "img": "https://p1.music.126.net/T5maNzr7sajQDTN0DhLq9A==/109951169781765992.jpg?param=300x300",
+        "has": [
+            "tag=PIKA"
+        ]
+    },
+    {
         "name": "纯音乐",
         "desc": "纯音乐，享受音乐本身",
         "img": "https://p2.music.126.net/wuBe3K5odyEqZBLZNkXNlg==/109951163855629724.jpg?param=300x300",
@@ -50,7 +58,7 @@
     {
         "name": "Phigros 精选集",
         "desc": "Phigros的一些音乐还是很好听的",
-        "img": "http://p1.music.126.net/-an8_fZ12KC-2kqm04WKWQ==/109951169854526787.jpg?param=300x300",
+        "img": "https://p1.music.126.net/-an8_fZ12KC-2kqm04WKWQ==/109951169854526787.jpg?param=300x300",
         "has": [
             "tag=Phigros"
         ]
