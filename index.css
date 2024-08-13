@@ -182,7 +182,7 @@ body.dark .group-list .group-item .info{
     margin: 20px 0;
 }
 .page.songs .song-list{
-    width: calc(100% - 401px);
+    width: calc(100% - 411px);
     height: 100%;
     float: left;
     overflow: hidden;
