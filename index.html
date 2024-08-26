@@ -6,12 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>陈思全的音乐盒子</title>
-    <link rel="stylesheet" href="index-min.css">
+    <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="./player.css">
     <style id="resizer"></style>
 </head>
 
 <body>
+    <div class="bg">
+        <div class="mbg">
+            <img src="" alt="">
+        </div>
+    </div>
+    
     <div class="page ready">
         <h1>陈思全的音乐盒子</h1>
         <div class="state loading">正在初始化...</div>
@@ -42,10 +48,6 @@
     </div>
     <div class="page player" style="display: none;">
         <div class="notice"></div>
-        <div class="mbg">
-            <img src="" alt="">
-            <div class="mcover"></div>
-        </div>
         <div class="siquan-player"><audio src="" id="audio"></audio>
             <div class="container">
                 <div class="topper">
@@ -177,6 +179,6 @@
     </div>
 </body>
 <script src="/mymusicbox2/musicapi-min.js"></script>
-<script src="./index-min.js"></script>
+<script src="./index.js"></script>
 
 </html>

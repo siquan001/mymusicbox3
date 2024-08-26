@@ -345,9 +345,9 @@ var sp = {
             PLAY_MODE      : 'loop',             // 播放模式，可选 loop 单曲循环，random 随机播放，order 顺序播放
             ENABLED_MID    : true,               // 是否启用歌曲mid，这主要应用于歌曲定位和评价显示
             SHOW_MID_IN_URL: true,               // 是否显示歌曲mid在歌曲链接中(这不会导致历史记录堆积)
-            PERFORMANCE_MODE:false,               // 性能模式，在页面失焦时取消动画和歌词更新和时间更新(针对一些配置较差的电脑进行后台播放)
-            BLURBG         : false,              // 是否显示模糊图片背景(这对配置较差的电脑是个挑战)
-            MAINCOLORBG    : true              // 是否以歌曲封面图片主题色作为背景(BLURBG=true时无效)
+            PERFORMANCE_MODE:true,               // 性能模式，在页面失焦时取消动画和歌词更新和时间更新(针对一些配置较差的电脑进行后台播放)
+            BLURBG         : true,              // 是否显示模糊图片背景(这对配置较差的电脑是个挑战)
+            MAINCOLORBG    : true              // 是否以歌曲封面图片主题色作为背景
         },
         noticeinter: null,
         notice:function(text, fn = function () { }){
@@ -396,7 +396,7 @@ var sp = {
                     rgb.r = ~~(rgb.r / count);
                     rgb.g = ~~(rgb.g / count);
                     rgb.b = ~~(rgb.b / count);
-                    cb('rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',.5)', (rgb.r + rgb.g + rgb.b) / 3 > 128);
+                    cb('rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',.5)', (rgb.r + rgb.g + rgb.b) / 3 > 160);
                 } catch (e) {
                     d();
                 }
@@ -413,7 +413,7 @@ var sp = {
                         var r = parseInt(h.substring(0, 2), 16);
                         var g = parseInt(h.substring(2, 4), 16);
                         var b = parseInt(h.substring(4, 6), 16);
-                        cb('rgba(' + r + ',' + g + ',' + b + ',.5)', (r + g + b) / 3 > 128);
+                        cb('rgba(' + r + ',' + g + ',' + b + ',.5)', (r + g + b) / 3 > 160);
                     }
                 }));
             }
@@ -666,7 +666,7 @@ font-size:${h * 0.024 * 0.75}px;
                         el.nextbtn.click();
                     } else {
                         el.img.src = data.img;
-                        document.querySelector(".mbg img").src = data.img;
+                        try{old_d.querySelector(".mbg img").src = data.img;}catch(e){}
                         $(".playing-mini img").src = data.img;
                         el.title.innerText = el.info.title.innerText = data.songname;
                         document.title = _title = data.songname;
@@ -677,9 +677,9 @@ font-size:${h * 0.024 * 0.75}px;
                         xrLRC();
 
                         // 设置主题色
-                        if (config.MAINCOLORBG && !config.BLURBG) {
+                        if (config.MAINCOLORBG) {
                             sp.player.colorfulImg(data.minipic || data.img, function (n, b) {
-                                document.querySelector('.siquan-player').style.background = n;
+                                old_d.querySelector('.bg').style.background = n;
                                 if (b != -1) {
                                     if ((b && mode == 0) || (!b && mode == 1)) {
                                         el.mode.click()
@@ -1066,7 +1066,7 @@ font-size:${h * 0.024 * 0.75}px;
                 }
                 // 在开启模糊背景功能时检测电脑性能
                 if(config.BLURBG&&localStorage.chaxinneng!='yes'){
-                document.querySelector(".mbg").style.display='block';
+                old_d.querySelector(".mbg").style.display='block';
                 if(!localStorage.chaxinneng)sp.player.performanse_test();
                 }
             }

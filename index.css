@@ -233,11 +233,11 @@ body.dark .page.songs .song-list{
     display: none;
 }
 .page.songs .song-list .list .item:hover{
-    background-color: #eee;
+    background-color: rgba(200,200,200,.5);
 }
 
 body.dark .page.songs .song-list .list .item:hover{
-    background-color: #555;
+    background-color: rgba(20,20,20,.5);
 }
 .page.songs .song-list .list .item:hover .name{
     line-height: 30px;
