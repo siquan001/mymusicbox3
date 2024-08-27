@@ -5,6 +5,15 @@
     padding: 0;
 }
 
+.moebeian{
+    text-align: center;   
+    line-height: 20px;
+}
+.moebeian a{
+    text-decoration: none;
+    color: inherit;
+    font-size: 12px;
+}
 html{
     overflow: hidden;
 }
@@ -48,6 +57,20 @@ body{
 .page.ready .state.error{
     color:red;
 }
+.page.ready .moebeian,
+.page.songs .moebeian
+{
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    left: 0;
+}
+.page.songs .moebeian{
+    width: auto;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+}
 
 @keyframes blink {
     0% {opacity: 1;}
@@ -58,6 +81,9 @@ body{
 .page.groups{
     overflow-y: auto;
     overflow-x: hidden;
+}
+.page.groups .moebeian{
+    padding-bottom: 20px;
 }
 .group-list{
     max-width: 1000px;
@@ -218,6 +244,9 @@ body.dark .page.songs .song-list{
     overflow: hidden;
     padding:0 10px;
     transition: all .3s;
+}
+.page.songs .song-list .list .item:last-child{
+    margin-bottom: 20px;
 }
 .page.songs .song-list .list .item.active{
     color:#09f;

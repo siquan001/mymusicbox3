@@ -346,7 +346,7 @@ var sp = {
             ENABLED_MID    : true,               // 是否启用歌曲mid，这主要应用于歌曲定位和评价显示
             SHOW_MID_IN_URL: true,               // 是否显示歌曲mid在歌曲链接中(这不会导致历史记录堆积)
             PERFORMANCE_MODE:true,               // 性能模式，在页面失焦时取消动画和歌词更新和时间更新(针对一些配置较差的电脑进行后台播放)
-            BLURBG         : true,              // 是否显示模糊图片背景(这对配置较差的电脑是个挑战)
+            BLURBG         : location.hash.indexOf('noblur')==-1,              // 是否显示模糊图片背景(这对配置较差的电脑是个挑战)
             MAINCOLORBG    : true              // 是否以歌曲封面图片主题色作为背景
         },
         noticeinter: null,
@@ -396,7 +396,7 @@ var sp = {
                     rgb.r = ~~(rgb.r / count);
                     rgb.g = ~~(rgb.g / count);
                     rgb.b = ~~(rgb.b / count);
-                    cb('rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',.5)', (rgb.r + rgb.g + rgb.b) / 3 > 160);
+                    cb('rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',.5)', (rgb.r + rgb.g + rgb.b) / 3 > 150);
                 } catch (e) {
                     d();
                 }
@@ -413,7 +413,7 @@ var sp = {
                         var r = parseInt(h.substring(0, 2), 16);
                         var g = parseInt(h.substring(2, 4), 16);
                         var b = parseInt(h.substring(4, 6), 16);
-                        cb('rgba(' + r + ',' + g + ',' + b + ',.5)', (r + g + b) / 3 > 160);
+                        cb('rgba(' + r + ',' + g + ',' + b + ',.5)', (r + g + b) / 3 > 150);
                     }
                 }));
             }
@@ -641,23 +641,25 @@ font-size:${h * 0.024 * 0.75}px;
 
             // 设置歌曲标签和评价
             function setTagAndInfo(i) {
+                var m=sp.player.musiclist[i];
                 // TAG
-                if (config.TAG) el.info.tags.innerHTML = sp.player.musiclist[i].tag.map(function (v) { return '<span class="s-tag">' + v + '</span>' }).join('');
+                if (config.TAG) el.info.tags.innerHTML = m.tag.map(function (v) { return '<span class="s-tag">' + v + '</span>' }).join('');
 
                 // 评价
                 if (i == -1 || !config.INFO || !config.ENABLED_MID) return;
-                el.info.pj.innerText=sp.infolist[sp.player.musiclist[i].mid]||'暂无';
+                el.info.pj.innerText=sp.infolist[m.mid]||'暂无';
             }
 
             // 获取并设置歌曲信息
             function setSongData(i) {
+                var m=sp.player.musiclist[i];
                 if(i>=0){
-                    el.title.innerText=el.info.title.innerText=sp.player.musiclist[i].name;
-                    document.title=_title=sp.player.musiclist[i].name;
-                    el.singer.innerText=el.info.singer.innerText=sp.player.musiclist[i].artist;
+                    el.title.innerText=el.info.title.innerText=m.name;
+                    document.title=_title=m.name;
+                    el.singer.innerText=el.info.singer.innerText=m.artist;
                   }
                 // 在i=-1时播放url的音乐信息
-                sp.player.rs.push(musicapi.get(i == -1 ? lssong : sp.player.musiclist[i], function (data) {
+                sp.player.rs.push(musicapi.get(i == -1 ? lssong : m, function (data) {
                     if (data.error) {
                         sp.player.notice('歌曲获取失败', function () {
                             alert(data.error);
@@ -674,6 +676,11 @@ font-size:${h * 0.024 * 0.75}px;
                         el.album.innerText = el.info.album.innerText = data.album;
                         el.singer.innerText = el.info.singer.innerText = data.artist;
                         LRC = data.lrc;
+                        if(data.lrcstr==''||data.nolrc){
+                            if(m.tag&&m.tag.indexOf('纯音乐')!=-1){
+                                LRC={0:'纯音乐，请欣赏'}
+                            }
+                        }
                         xrLRC();
 
                         // 设置主题色

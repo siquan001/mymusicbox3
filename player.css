@@ -15,6 +15,7 @@ body.dark{
     bottom: 0;
     z-index: -1;
     opacity: .5;
+    transition: all .3s;
   }
   body.dark .siquan-player .container .right ul li{
     color: #aaa;
