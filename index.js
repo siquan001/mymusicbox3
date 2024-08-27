@@ -750,19 +750,23 @@ font-size:${h * 0.024 * 0.75}px;
                         }
                         i++;
                     }
-                    try {
-                        el.lrc.querySelector('li.act').classList.remove('act');
-                    } catch (e) { }
-                    var h = document.querySelector(".right").getBoundingClientRect().height / 2;
-                    var al = el.lrc.querySelectorAll('li');
-                    for (var j = 0; j < i; j++) {
-                        h -= al[j].getBoundingClientRect().height;
+                    var rli=el.lrc.querySelector('li.act');
+                    if(i!=-1){
+                        var tli=el.lrc.querySelectorAll('li')[i];
+                        if(tli.classList.contains('act')){
+                        return;
+                        }else{
+                        rli&&rli.classList.remove('act');
+                        }
+                        tli.classList.add('act');
+                    }else{
+                        rli&&rli.classList.remove('act');
                     }
-                    if (i != -1) {
-                        h -= al[i].getBoundingClientRect().height / 2;
-                        el.lrc.querySelectorAll('li')[i].classList.add('act');
-                    }
-                    el.lrc.style.marginTop = h + 'px';
+                    rli=null;
+                    var tlitop=tli.offsetTop-el.lrc.offsetTop;
+                    var h=document.querySelector(".right").getBoundingClientRect().height/2-tli.getBoundingClientRect().height/2;      
+                    el.lrc.style.marginTop=h-tlitop+'px';
+                    tli=null;
                 });
 
                 el.audio.addEventListener('play', function () {
