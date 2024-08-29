@@ -187,6 +187,24 @@
         </div>
     </div>
 </body>
+<script>
+    var config={
+            INFO           : true,               // 显示你的评价 (取决于 INFO_JSON里的内容)
+            TAG            : true,               // 显示歌曲标签 (取决于musiclist[i].tag)
+            DEFAULT_MODE   : 'light',            // 默认模式 ，可选 light 亮色,dark 暗色
+            INFO_JSON      : '/mymusicbox2/info.json',// 歌曲评价数据 
+            GROUP_JSON     : './group-min.json',  // 歌单数据
+            MUSIC_JSON     : '/mymusicbox2/musiclist-min.json',// 歌曲数据
+            AUTOPLAY       : true,               // 自动播放
+            START_PLAY     : 'random',            // 刚开始的播放策略，可选 random 随机播放，first 第一首播放
+            PLAY_MODE      : 'loop',             // 播放模式，可选 loop 单曲循环，random 随机播放，order 顺序播放
+            ENABLED_MID    : true,               // 是否启用歌曲mid，这主要应用于歌曲定位和评价显示
+            SHOW_MID_IN_URL: true,               // 是否显示歌曲mid在歌曲链接中(这不会导致历史记录堆积)
+            PERFORMANCE_MODE:true,               // 性能模式，在页面失焦时取消动画和歌词更新和时间更新(针对一些配置较差的电脑进行后台播放)
+            BLURBG         : location.hash.indexOf('noblur')==-1,              // 是否显示模糊图片背景(这对配置较差的电脑是个挑战)
+            MAINCOLORBG    : true              // 是否以歌曲封面图片主题色作为背景
+        }
+</script>
 <script src="/mymusicbox2/musicapi-min.js"></script>
 <script src="./index-min.js"></script>
 

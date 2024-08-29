@@ -335,29 +335,15 @@ var sp = {
     },
     player: {
         nowlistid:null,
-        config:{
-            INFO           : true,               // 显示你的评价 (取决于 INFO_ROOT/[mid].txt)
-            TAG            : true,               // 显示歌曲标签 (取决于musiclist[i].tag)
-            DEFAULT_MODE   : 'light',            // 默认模式 ，可选 light 亮色,dark 暗色
-            INFO_ROOT      : '/mymusicbox2/info/',           // 评价文件夹根目录 (结尾要加“/”)
-            AUTOPLAY       : true,               // 自动播放
-            START_PLAY     : 'random',            // 刚开始的播放策略，可选 random 随机播放，first 第一首播放
-            PLAY_MODE      : 'loop',             // 播放模式，可选 loop 单曲循环，random 随机播放，order 顺序播放
-            ENABLED_MID    : true,               // 是否启用歌曲mid，这主要应用于歌曲定位和评价显示
-            SHOW_MID_IN_URL: true,               // 是否显示歌曲mid在歌曲链接中(这不会导致历史记录堆积)
-            PERFORMANCE_MODE:true,               // 性能模式，在页面失焦时取消动画和歌词更新和时间更新(针对一些配置较差的电脑进行后台播放)
-            BLURBG         : location.hash.indexOf('noblur')==-1,              // 是否显示模糊图片背景(这对配置较差的电脑是个挑战)
-            MAINCOLORBG    : true              // 是否以歌曲封面图片主题色作为背景
-        },
         noticeinter: null,
         notice:function(text, fn = function () { }){
             clearTimeout(this.noticeinter);
-            document.querySelector(".notice").innerText = text;
-            document.querySelector(".notice").onclick = fn;
-            document.querySelector(".notice").style.display = 'block';
+            $(".notice").innerText = text;
+            $(".notice").onclick = fn;
+            $(".notice").style.display = 'block';
             this.noticeinter = setTimeout(function () {
-                document.querySelector(".notice").style.display = 'none';
-                document.querySelector(".notice").onclick = function () { };
+                $(".notice").style.display = 'none';
+                $(".notice").onclick = function () { };
             }, 2000);
         },
          /**
@@ -432,48 +418,6 @@ var sp = {
             }
             return min + ':' + sec;
         },
-        performanse_test: function performanse_test() {
-            var xinnenginter;
-            var zhenshu = 0;
-            var lowzhenshu = 0;
-
-            function cxinneng() {
-                function xnjc() {
-                    requestAnimationFrame(function () {
-                        zhenshu++;
-                        (!isStopBlurBg) && xnjc();
-                    })
-                }
-                setTimeout(function () {
-                    xnjc();
-                    checkxinnengInterval();
-                }, 2000)
-            }
-            cxinneng();
-            function checkxinnengInterval() {
-                xinnenginter = setInterval(function () {
-                    if (zhenshu <= 16) {
-                        lowzhenshu++;
-                        if (lowzhenshu > 5) {
-                            if (confirm('你的电脑性能较差，是否取消模糊背景功能？')) {
-                                clearTimeout(bx);
-                                localStorage.chaxinneng = 'yes';
-                                document.querySelector(".mbg").style.display = 'none';
-                            } else {
-                                localStorage.chaxinneng = 'no';
-                            }
-                            isStopBlurBg = true;
-                            clearInterval(xinnenginter);
-                        }
-                    }
-                    zhenshu = 0;
-                }, 1000)
-            }
-            var bx = setTimeout(function () {
-                clearInterval(xinnenginter);
-                localStorage.chaxinneng = 'no';
-            }, 6e5);
-        },
         sp:function () {
             var a = true;
             document.body.style.transition = 'none';
@@ -481,9 +425,9 @@ var sp = {
             setInterval(function () {
                 a = !a;
                 if (a) {
-                    document.querySelector('.siquan-player').style.transform = 'translateY(-10px)';
+                    $('.siquan-player').style.transform = 'translateY(-10px)';
                 } else {
-                    document.querySelector('.siquan-player').style.transform = 'translateY(10px)';
+                    $('.siquan-player').style.transform = 'translateY(10px)';
                 }
                 sp.player.el.mode.click();
             }, 50);
@@ -493,15 +437,15 @@ var sp = {
                 document.body.style.opacity = Math.random();
                 b = !b;
                 if (b) {
-                    document.querySelector('.siquan-player').style.transform = 'translateX(-10px)';
+                    $('.siquan-player').style.transform = 'translateX(-10px)';
                 } else {
-                    document.querySelector('.siquan-player').style.transform = 'translateX(10px)';
+                    $('.siquan-player').style.transform = 'translateX(10px)';
                 }
                 sp.player.el.mode.click();
             }, 70);
         },
         resize:function resize() {
-            var resizer = document.querySelector("#resizer");
+            var resizer = $("#resizer");
             var w = document.documentElement.clientWidth;
             var h = document.documentElement.clientHeight;
             document.body.style.width=w+'px';
@@ -604,6 +548,9 @@ font-size:${h * 0.024 * 0.75}px;
         init: function () {
             var old_d=window.document;
             var document=$('.page.player');
+            function $_(a,b){
+                return document['querySelector' + (b ? 'All' : '')](a);
+            }
             document.getElementById=function(id){
                 return old_d.getElementById(id);
             }
@@ -754,19 +701,23 @@ font-size:${h * 0.024 * 0.75}px;
                     if(i!=-1){
                         var tli=el.lrc.querySelectorAll('li')[i];
                         if(tli.classList.contains('act')){
-                        return;
+                            return then();
                         }else{
-                        rli&&rli.classList.remove('act');
+                            rli&&rli.classList.remove('act');
                         }
                         tli.classList.add('act');
                     }else{
                         rli&&rli.classList.remove('act');
                     }
-                    rli=null;
-                    var tlitop=tli.offsetTop-el.lrc.offsetTop;
-                    var h=document.querySelector(".right").getBoundingClientRect().height/2-tli.getBoundingClientRect().height/2;      
-                    el.lrc.style.marginTop=h-tlitop+'px';
-                    tli=null;
+                    function then(){
+                        rli=null;
+                        var tlitop=tli.offsetTop-el.lrc.offsetTop;
+                        var h=$(".right").getBoundingClientRect().height/2-tli.getBoundingClientRect().height/2;      
+                        el.lrc.style.marginTop=h-tlitop+'px';
+                        tli=null;
+                    }
+                    then();
+                    
                 });
 
                 el.audio.addEventListener('play', function () {
@@ -946,7 +897,7 @@ font-size:${h * 0.024 * 0.75}px;
                 })
 
                 el.musicinfobtn.addEventListener('click', function () {
-                    document.querySelector(".dialog.musicinfo").classList.add('show');
+                    $_(".dialog.musicinfo").classList.add('show');
                 })
                 el.fullBtn.addEventListener('click',function(){
                     if(old_d.fullscreenElement){
@@ -993,6 +944,7 @@ font-size:${h * 0.024 * 0.75}px;
 
             // 性能模式
             function initPerformanceMode() {
+                console.log('inited');
                 document.addEventListener('visibilitychange', function () {
                     var isHidden = document.hidden;
                     if (isHidden) {
@@ -1002,22 +954,15 @@ font-size:${h * 0.024 * 0.75}px;
                     }
                 });
                 window.onfocus = function () {
-                    if (config.BLURBG && !isStopBlurBg) {
-                        clearInterval(xinnenginter);
-                        checkxinnengInterval();
-                    }
                     document.title = _title;
                     el.img.style.animationPlayState = ""
-                    document.querySelector(".playing-anim").style.display = ""
+                    $_(".playing-anim").style.display = ""
                     activing = false;
                 }
                 window.onblur = function () {
-                    if (config.BLURBG && !isStopBlurBg) {
-                        clearInterval(xinnenginter);
-                    }
                     document.title = "[性能模式冻结中]" + _title;
                     el.img.style.animationPlayState = "paused"
-                    document.querySelector(".playing-anim").style.display = "none";
+                    $_(".playing-anim").style.display = "none";
                     activing = true;
                 }
             }
@@ -1025,38 +970,38 @@ font-size:${h * 0.024 * 0.75}px;
             // 初始化所有
             function init(){
                 el={
-                img:document.getElementById("img"),
-                title:document.getElementById("music-title"),
-                album:document.getElementById("music-album"),
-                singer:document.getElementById("music-singer"),
-                audio:document.getElementById("audio"),
+                img:$_("#img"),
+                title:$_("#music-title"),
+                album:$_("#music-album"),
+                singer:$_("#music-singer"),
+                audio:$_("#audio"),
                 range:{
-                    r1:document.querySelector(".range .r1"),
-                    r2:document.querySelector(".range .r2"),
-                    r:document.querySelector(".range")
+                    r1:$_(".range .r1"),
+                    r2:$_(".range .r2"),
+                    r:$_(".range")
                 },
                 time:{
-                    cur:document.querySelector(".time .l"),
-                    max:document.querySelector(".time .r"),
+                    cur:$_(".time .l"),
+                    max:$_(".time .r"),
                 },
-                playbtn:document.querySelector(".playbtn"),
-                container:document.querySelector(".siquan-player .container"),
-                lrc:document.querySelector(".right ul"),
-                lastbtn:document.querySelector(".lastbtn"),
-                nextbtn:document.querySelector(".nextbtn"),
-                switchBtn:document.querySelector(".sx"),
-                fullBtn:document.querySelector(".full"),
-                mode:document.querySelector(".mode"),
-                musiclistbtn:document.getElementById("siquan-player-musiclist"),
-                musicinfobtn:document.getElementById("siquan-player-musicinfo"),
+                playbtn:$_(".playbtn"),
+                container:$_(".siquan-player .container"),
+                lrc:$_(".right ul"),
+                lastbtn:$_(".lastbtn"),
+                nextbtn:$_(".nextbtn"),
+                switchBtn:$_(".sx"),
+                fullBtn:$_(".full"),
+                mode:$_(".mode"),
+                musiclistbtn:$_("#siquan-player-musiclist"),
+                musicinfobtn:$_("#siquan-player-musicinfo"),
                 info:{
-                    title:document.querySelector(".info-name"),
-                    album:document.querySelector(".info-album"),
-                    singer:document.querySelector(".info-singer"),
-                    tags:document.querySelector(".info-tags .in"),
-                    pj:document.querySelector(".info-pj .in"),
-                    tags_f:document.querySelector(".info-tags"),
-                    pj_f:document.querySelector(".info-pj"),
+                    title:$_(".info-name"),
+                    album:$_(".info-album"),
+                    singer:$_(".info-singer"),
+                    tags:$_(".info-tags .in"),
+                    pj:$_(".info-pj .in"),
+                    tags_f:$_(".info-tags"),
+                    pj_f:$_(".info-pj"),
                 }
                 }
                 sp.player.el=el;
@@ -1076,9 +1021,8 @@ font-size:${h * 0.024 * 0.75}px;
                     el.info.pj_f.style.display='none';
                 }
                 // 在开启模糊背景功能时检测电脑性能
-                if(config.BLURBG&&localStorage.chaxinneng!='yes'){
-                old_d.querySelector(".mbg").style.display='block';
-                if(!localStorage.chaxinneng)sp.player.performanse_test();
+                if(config.BLURBG){
+                    old_d.querySelector(".mbg").style.display='block';
                 }
             }
 
@@ -1096,7 +1040,6 @@ font-size:${h * 0.024 * 0.75}px;
             var activing=false;
             var rangeDragging=true;
             // abort list
-            var config=sp.player.config
             init();
         }
     },
