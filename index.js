@@ -547,6 +547,9 @@ font-size:${h * 0.024 * 0.75}px;
         musiclist:null,
         init: function () {
             var old_d=window.document;
+            old_d.querySelector(".mbg img").onload=function(){
+                this.style.opacity=1;
+            }
             var document=$('.page.player');
             function $_(a,b){
                 return document['querySelector' + (b ? 'All' : '')](a);
@@ -570,6 +573,7 @@ font-size:${h * 0.024 * 0.75}px;
             });
             // 根据索引播放音乐
             function play(i) {
+                old_d.querySelector(".mbg img").style.opacity=0;
                 sp.player.rs.forEach(function (r) {
                     r.abort();
                 })
@@ -615,7 +619,9 @@ font-size:${h * 0.024 * 0.75}px;
                         el.nextbtn.click();
                     } else {
                         el.img.src = data.img;
-                        try{old_d.querySelector(".mbg img").src = data.img;}catch(e){}
+                        try{
+                            old_d.querySelector(".mbg img").src = data.img;
+                        }catch(e){}
                         $(".playing-mini img").src = data.img;
                         el.title.innerText = el.info.title.innerText = data.songname;
                         document.title = _title = data.songname;
@@ -1040,6 +1046,7 @@ font-size:${h * 0.024 * 0.75}px;
             var activing=false;
             var rangeDragging=true;
             // abort list
+            config.ENABLED_MID=true;
             init();
         }
     },

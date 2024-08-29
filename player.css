@@ -76,6 +76,8 @@ body.dark{
     filter: blur(50px);
     transform: scale(1.3);
     transform-origin: center center;
+    transition: all .3s;
+    opacity: 0;
 }
 
 .siquan-player .container {
