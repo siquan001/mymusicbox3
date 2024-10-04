@@ -94,5 +94,17 @@
         "has": [
             "tag=甜歌"
         ]
+    },
+    {
+        "name": "EMO 精选集",
+        "desc": "......",
+        "img": "https://p1.music.126.net/-5kwASaP2-LcTr9VrmnmTg==/109951166273496994.jpg?param=300x300",
+        "has": [
+            "matchName=无梦之梦",
+            "matchName=uzumakinoharu",
+            "matchName=她追逐着月光的尽头",
+            "matchName=River Flows In You",
+            "matchName=你离开的事实"
+        ]
     }
 ]
