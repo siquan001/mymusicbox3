@@ -704,8 +704,9 @@ font-size:${h * 0.024 * 0.75}px;
                         i++;
                     }
                     var rli=el.lrc.querySelector('li.act');
+                    var tli;
                     if(i!=-1){
-                        var tli=el.lrc.querySelectorAll('li')[i];
+                        tli=el.lrc.querySelectorAll('li')[i];
                         if(tli.classList.contains('act')){
                             return then();
                         }else{
@@ -714,6 +715,7 @@ font-size:${h * 0.024 * 0.75}px;
                         tli.classList.add('act');
                     }else{
                         rli&&rli.classList.remove('act');
+                        tli=el.lrc.querySelector('li');
                     }
                     function then(){
                         rli=null;
