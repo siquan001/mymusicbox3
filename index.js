@@ -382,7 +382,13 @@ var sp = {
                     rgb.r = ~~(rgb.r / count);
                     rgb.g = ~~(rgb.g / count);
                     rgb.b = ~~(rgb.b / count);
-                    cb('rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',.5)', (rgb.r + rgb.g + rgb.b) / 3 > 150);
+                    var m=(rgb.r + rgb.g + rgb.b) / 3 > 150;
+                    function ccl(c){
+                        return c>255?255:c<0?0:c;
+                    }
+                    var m2=(rgb.r/2)+','+(rgb.g/2)+','+(rgb.b/2);
+                    var m3=ccl(rgb.r*2)+','+ccl(rgb.g*2)+','+ccl(rgb.b*2);
+                    cb('rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',.5)', m,[['rgb('+m2+')','rgba('+m2+',.5)'],['rgb('+m3+')','rgba('+m3+',.5)']]);
                 } catch (e) {
                     d();
                 }
@@ -399,7 +405,14 @@ var sp = {
                         var r = parseInt(h.substring(0, 2), 16);
                         var g = parseInt(h.substring(2, 4), 16);
                         var b = parseInt(h.substring(4, 6), 16);
-                        cb('rgba(' + r + ',' + g + ',' + b + ',.5)', (r + g + b) / 3 > 150);
+                        var rgb={r,g,b};
+                        var m=(rgb.r + rgb.g + rgb.b) / 3 > 150;
+                        function ccl(c){
+                            return c>255?255:c<0?0:c;
+                        }
+                        var m2=(rgb.r/2)+','+(rgb.g/2)+','+(rgb.b/2);
+                        var m3=ccl(rgb.r*2)+','+ccl(rgb.g*2)+','+ccl(rgb.b*2);
+                        cb('rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',.5)', m,[['rgb('+m2+')','rgba('+m2+',.5)'],['rgb('+m3+')','rgba('+m3+',.5)']]);
                     }
                 }));
             }
@@ -638,8 +651,14 @@ font-size:${h * 0.024 * 0.75}px;
 
                         // 设置主题色
                         if (config.MAINCOLORBG) {
-                            sp.player.colorfulImg(data.minipic || data.img, function (n, b) {
+                            sp.player.colorfulImg(data.minipic || data.img, function (n, b,tt) {
                                 old_d.querySelector('.bg').style.background = n;
+                                if(config.MAINCOLORPLUS){
+                                    old_d.getElementById('f').innerHTML='.siquan-player .container .right ul li{color:'+tt[0][1]+'}.siquan-player,.siquan-player .container .right ul li.act{color:'+tt[0][0]+'}'+
+                                    '.siquan-player .container .left .music-controls .range .r1,.siquan-player .container .left .music-controls .range .r2{background-color:'+tt[0][0]+'}.siquan-player .container .left .music-controls .range{background-color:'+tt[0][1]+'}'+
+                                    'body.dark .siquan-player .container .left .music-controls .range .r1,body.dark .siquan-player .container .left .music-controls .range .r2{background-color:'+tt[1][0]+'}body.dark .siquan-player .container .left .music-controls .range{background-color:'+tt[1][1]+'}'+
+                                    'body.dark .siquan-player .container .right ul li{color:'+tt[1][1]+'}body.dark .siquan-player,body.dark .siquan-player .container .right ul li.act{color:'+tt[1][0]+'}';
+                                }
                                 if (b != -1) {
                                     if ((b && mode == 0) || (!b && mode == 1)) {
                                         el.mode.click()

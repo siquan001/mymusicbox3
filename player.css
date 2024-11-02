@@ -165,7 +165,6 @@ body.dark{
 
 .siquan-player .container .left .music-info .music-message {
     font-size: 14px;
-    color: #333;
 }
 
 .siquan-player .container .left .music-controls {
@@ -202,7 +201,6 @@ body.dark{
 
 .siquan-player .container .left .music-controls .time {
     font-size: 14px;
-    color: #333;
     width: calc(100% - 50px);
     margin: 0 25px;
     overflow: hidden;

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="index-min.css">
     <link rel="stylesheet" href="./player-min.css">
     <style id="resizer"></style>
+    <style id="f"></style>
 </head>
 
 <body>
@@ -200,10 +201,11 @@
             PLAY_MODE      : 'loop',             // 播放模式，可选 loop 单曲循环，random 随机播放，order 顺序播放
             PERFORMANCE_MODE:false,               // 性能模式，在页面失焦时取消动画和歌词更新和时间更新(针对一些配置较差的电脑进行后台播放)
             BLURBG         : location.hash.indexOf('noblur')==-1,              // 是否显示模糊图片背景(这对配置较差的电脑是个挑战)
-            MAINCOLORBG    : true              // 是否以歌曲封面图片主题色作为背景
+            MAINCOLORBG    : true,              // 是否以歌曲封面图片主题色作为背景
+            MAINCOLORPLUS  : true              // 是否以歌曲封面图片主题色作为文字颜色
         }
 </script>
 <script src="/mymusicbox2/musicapi-min.js"></script>
-<script src="./index-min.js"></script>
+<script src="./index.js"></script>
 
 </html>
