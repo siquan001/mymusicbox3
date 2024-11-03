@@ -207,5 +207,15 @@
 </script>
 <script src="/mymusicbox2/musicapi-min.js"></script>
 <script src="./index-min.js"></script>
-
+<script src="./NoSleep.min.js"></script>
+<script>
+    var noSleep = new NoSleep();
+    document.addEventListener("visibilitychange", function() {
+        if (document.hidden) {
+            noSleep.disable();
+        } else {
+            noSleep.enable();
+        }
+    });
+</script>
 </html>
