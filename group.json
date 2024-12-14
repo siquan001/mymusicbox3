@@ -8,9 +8,17 @@
         ]
     },
     {
+        "name": "最近在听",
+        "desc": "我最近在听的音乐",
+        "img": "https://p2.music.126.net/aeceq9f8r8q62ivqlss1qQ==/109951164921864433.jpg?param=300x300",
+        "has": [
+            "tag=最近在听"
+        ]
+    },
+    {
         "name": "特别喜欢",
         "desc": "我特别喜欢的音乐",
-        "img": "https://p1.music.126.net/NPveskRNRWFL9cUkO2I7hA==/109951164795566364.jpg?param=300x300",
+        "img": "http://y.gtimg.cn/music/photo_new/T002R300x300M000004TbFz03OoL2H.jpg",
         "has": [
             "tag=特别喜欢"
         ]
@@ -56,11 +64,14 @@
         ]
     },
     {
-        "name": "Phigros 精选集",
-        "desc": "Phigros的一些音乐还是很好听的",
-        "img": "https://p1.music.126.net/-an8_fZ12KC-2kqm04WKWQ==/109951169854526787.jpg?param=300x300",
+        "name": "音游 精选集",
+        "desc": "音游极大地拓宽了我的音乐视野",
+        "img": "http://p2.music.126.net/hki32mnQ2eErSvY5-4n6sA==/109951169819353467.jpg?param=300x300",
         "has": [
-            "tag=Phigros"
+            "tag=Phigros",
+            "tag=律动轨迹",
+            "tag=旋转音律",
+            "tag=cytus"
         ]
     },
     {
