@@ -130,6 +130,8 @@ body.dark{
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    transition: all .8s;
+    margin-left: 0;
 }
 
 .siquan-player .container .flbtn {
@@ -169,6 +171,8 @@ body.dark{
 
 .siquan-player .container .left .music-controls {
     width: 100%;
+    opacity: 1;
+    transition: all .5s;
 }
 
 .siquan-player .container .left .music-controls .range {
@@ -218,6 +222,7 @@ body.dark{
     width: 210px;
     height: 70px;
     margin: 10px auto;
+    transition: all .3s;
 }
 
 .siquan-player .container .left .music-controls .pl .iconbtn {
@@ -241,6 +246,8 @@ body.dark{
     float: left;
     width: 60%;
     height: 100%;
+    transition: all .8s;
+    opacity: 1;
 }
 
 .siquan-player .container .right ul li {
@@ -533,6 +540,94 @@ body.dark{
     color: #000;
 }
 
+
+.pure .right{
+    opacity: 0!important;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.pure .left{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%!important;
+    margin-left: 25%!important;
+    float: none!important;
+}
+.pure .left .music-controls{
+    height: 0;
+}
+.pure .siquan-player .container .left .music-controls .range{
+    height: 1px;
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    width: 50%;
+}
+.pure .siquan-player .container .left .music-controls .range .r1{
+    opacity: 0;
+}
+.pure .siquan-player .container .left .music-controls .time{
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+.pure .siquan-player .container .left .music-album-pic{
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+.pure .siquan-player .container .left .music-info{
+    position: absolute;
+    bottom: 40px;
+}
+.pure .siquan-player .container .left .music-controls .pl{
+    height: 0;
+}
+.pure .siquan-player .container .left .music-controls .pl .iconbtn.lastbtn{
+    position: fixed;
+    top: 40%;
+    left: 10%;
+    width: 20%;
+    height: 50%;
+    opacity: 0;
+    transform: translateY(-50%);
+}
+.pure .siquan-player .container .left .music-controls .pl .iconbtn.playbtn{
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    width: 20%;
+    opacity: 0!important;
+    transform: translate(-50%,-50%);
+}
+.pure .siquan-player .container .left .music-controls .pl .iconbtn.nextbtn{
+    position: fixed;
+    top: 40%;
+    right: 10%;
+    width: 20%;
+    height: 50%;
+    opacity: 0;
+    transform: translateY(-50%);
+}
+
+.pure .siquan-player .container .left .music-controls .pl .iconbtn:hover{
+    background-color: transparent;
+    opacity: .5;
+}
+.pure .siquan-player .container .left .music-controls .pl .iconbtn svg{
+    width: 50px;
+}
+
 @media(max-width:700px) {
     .siquan-player .container .left {
         width: 100%;
@@ -599,5 +694,33 @@ body.dark{
     .siquan-player .container .flbtn {
         bottom: 135px;
         z-index: 2;
+        transition: all .3s;
+    }
+    .pure .siquan-player .container .flbtn {
+        bottom: 10px;
+    }
+    .pure .siquan-player .container .left .music-controls .pl .iconbtn.lastbtn{
+        top: 45%;
+        left: 0;
+        width: calc(50% - 100px);
+        height: 200px;
+        transform: translateY(-50%);
+    }
+    .pure .siquan-player .container .left .music-controls .pl .iconbtn.playbtn{
+        top: calc(40% + 30px);
+        left: calc(50% - 10px);
+        width: 200px;
+        height: 200px;
+        transform: translate(-50%,-50%);
+    }
+    .pure .siquan-player .container .left .music-controls .pl .iconbtn.nextbtn{
+        top: 45%;
+        right: 0;
+        width: calc(50% - 100px);
+        height: 200px;
+        transform: translateY(-50%);
+    }
+    .pure .siquan-player .container .left .music-controls .pl .iconbtn svg{
+        width: 30px;
     }
 }

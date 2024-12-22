@@ -473,7 +473,8 @@ var sp = {
                 resizer.innerHTML = '';
                 return;
             }
-            var styles = `.siquan-player .container .left .music-album-pic{
+            var styles = `.siquan-player .container .left .music-album-pic,
+            .pure .siquan-player .container .left .music-controls .pl .iconbtn.playbtn{
 width:${Math.min(w * 0.287, h * 0.5)}px;
 height:${Math.min(w * 0.287, h * 0.5)}px;
 }
@@ -654,6 +655,12 @@ font-size:${h * 0.024 * 0.75}px;
                             }
                         }
                         xrLRC();
+
+                        if(m.tag&&m.tag.indexOf('纯音乐')!=-1){
+                            document.classList.add('pure');
+                        }else{
+                            document.classList.remove('pure');
+                        }
 
                         // 设置主题色
                         if (config.MAINCOLORBG) {
