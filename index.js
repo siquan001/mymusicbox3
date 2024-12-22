@@ -438,30 +438,190 @@ var sp = {
             return min + ':' + sec;
         },
         sp:function () {
-            var a = true;
-            document.body.style.transition = 'none';
-            document.body.style.cursor = 'none';
-            setInterval(function () {
-                a = !a;
-                if (a) {
-                    $('.siquan-player').style.transform = 'translateY(-10px)';
-                } else {
-                    $('.siquan-player').style.transform = 'translateY(10px)';
-                }
-                sp.player.el.mode.click();
-            }, 50);
-            var b = true;
+            var k,p,e=10,o=50;
+            $('.siquan-player').style.pointerEvents='none';
+            function jt(){
+                var a = true;
+                document.body.style.transition = 'none';
+                document.body.style.cursor = 'none';
+                k=setInterval(function () {
+                    a = !a;
+                    if (a) {
+                        $('.siquan-player').style.transform = 'translateY(-'+e+'px)';
+                    } else {
+                        $('.siquan-player').style.transform = 'translateY('+e+'px)';
+                    }
+                    sp.player.el.mode.click();
+                }, 50);
+                var b = true;
+    
+                p=setInterval(function () {
+                    document.body.style.opacity = Math.random()*(o*0.01)+1-o*0.01;
+                    b = !b;
+                    if (b) {
+                        $('.siquan-player').style.transform = 'translateX(-'+e+'px)';
+                    } else {
+                        $('.siquan-player').style.transform = 'translateX('+e+'px)';
+                    }
+                    sp.player.el.mode.click();
+                }, 70);
+            }
 
-            setInterval(function () {
-                document.body.style.opacity = Math.random();
-                b = !b;
-                if (b) {
-                    $('.siquan-player').style.transform = 'translateX(-10px)';
-                } else {
-                    $('.siquan-player').style.transform = 'translateX(10px)';
+            var jd=0;
+            $('audio').addEventListener('timeupdate',function(){
+                var time=this.currentTime;
+                if(jd==0&time>=14.4){
+                    jt();
+                    jd++;
                 }
-                sp.player.el.mode.click();
-            }, 70);
+
+                if(jd==1&time>=20){
+                    o=10;
+                    e=4;
+                    jd++;
+                }
+
+                if(jd==2&time>=20.5){
+                    o=50;
+                    e=10;
+                    jd++;
+                }
+                if(jd==3&time>=22.7){
+                    o=10;
+                    e=4;
+                    jd++;
+                }
+                if(jd==4&time>=23.2){
+                    o=50;
+                    e=10;
+                    jd++;
+                }
+                if(jd==5&time>=24.2){
+                    o=20;
+                    e=8;
+                    jd++;
+                }
+                if(jd==6&time>=26){
+                    o=60;
+                    e=60;
+                    jd++;
+                }
+                if(jd==7&time>=36.5){
+                    o=20;
+                    e=5;
+                    jd++;
+                }
+
+                if(jd==8&time>=38.5){
+                    o=80;
+                    e=80;
+                    jd++;
+                }
+
+                if(jd==9&time>=44){
+                    o=20;
+                    e=5;
+                    jd++;
+                }
+                if(jd==10&time>=45){
+                    o=80;
+                    e=80;
+                    jd++;
+                }
+                if(jd==11&time>=50){
+                    o=20;
+                    e=5;
+                    jd++;
+                }
+                if(jd==11&time>=61.5){
+                    o=100;
+                    e=120;
+                    jd++;
+                }
+                if(jd==12&time>=73){
+                    o=10;
+                    e=5;
+                    jd+=1;
+                }
+                if(jd==13&time>=78){
+                    clearInterval(k);
+                    clearInterval(p);
+                    document.body.style.transition = '';
+                    document.body.style.opacity='1';
+                    document.body.classList.remove('light');
+                    document.body.classList.add('dark');
+                    o=100;
+                    e=10;
+                    jd++;
+                }
+                
+                if(jd==14&time>=91){
+                    jt();
+                    jd++;
+                }
+                if(jd==15&time>=98){
+                    o=10;
+                    e=5;
+                    jd++;
+                }
+                if(jd==16&time>=102){
+                    o=100;
+                    e=50;
+                    jd++;
+                }
+                if(jd==17&time>=116){
+                    o=100;
+                    e=80;
+                    jd++;
+                }
+                if(jd==18&time>=122.5){
+                    o=0;
+                    e=0;
+                    jd++;
+                }
+                if(jd==19&time>=123.5){
+                    o=100;
+                    e=80;
+                    jd++;
+                }
+                if(jd==20&time>=124.5){
+                    o=0;
+                    e=0;
+                    jd++;
+                }
+                if(jd==21&time>=125.5){
+                    o=100;
+                    e=80;
+                    jd++;
+                }
+                if(jd==22&time>=129){
+                    o=10;
+                    e=10;
+                    jd++;
+                }
+                if(jd==23&time>=137){
+                    o=100;
+                    e=150;
+                    jd++;
+                }
+
+
+                if(jd==24&time>=155){
+                    clearInterval(k);
+                    clearInterval(p);
+                    document.body.style.opacity = '0';
+                    var _=['#000','#00f'],__=0;
+                    setInterval(function(){
+                        document.documentElement.style.backgroundColor=_[__];
+                        __=__==0?1:0;
+                    },1000)
+                    jd++;
+                }
+            })
+            $('audio').addEventListener('ended',function(){
+                $('audio').src='';
+                $('audio').remove();
+            })
         },
         resize:function resize() {
             var resizer = $("#resizer");
