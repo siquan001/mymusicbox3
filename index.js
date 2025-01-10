@@ -839,6 +839,20 @@ font-size:${h * 0.024 * 0.75}px;
                                 }
                             });
                         }
+
+                        let img=data.minipic || data.img;
+                        img=img.replace('http://','https://');
+                        if ("mediaSession" in navigator) {
+                            let metadata = new MediaMetadata({
+                                title: data.songname,
+                                artist: data.artist,
+                                album: data.album||"",
+                                artwork: [
+                                    { src: img, sizes: "256x256", type: "image/jpeg" }
+                                ]
+                            });
+                            navigator.mediaSession.metadata = metadata;
+                        }
                     }
                 }))
             }
@@ -939,6 +953,29 @@ font-size:${h * 0.024 * 0.75}px;
                         el.nextbtn.click();
                     }
                 })
+            }
+
+            function initMediaSession() {
+                if ("mediaSession" in navigator) {
+                    navigator.mediaSession.setActionHandler('play', function () {
+                        el.audio.play();
+                    });
+                    navigator.mediaSession.setActionHandler('pause', function () {
+                        el.audio.pause();
+                    });
+                    navigator.mediaSession.setActionHandler('seekbackward', function () {
+                        el.audio.currentTime -= 10;
+                    });
+                    navigator.mediaSession.setActionHandler('seekforward', function () {
+                        el.audio.currentTime += 10;
+                    });
+                    navigator.mediaSession.setActionHandler('previoustrack', function () {
+                        el.lastbtn.click();
+                    });
+                    navigator.mediaSession.setActionHandler('nexttrack', function () {
+                        el.nextbtn.click();
+                    });
+                }
             }
 
             // 音乐播放器元素事件（除拖动条）
@@ -1213,6 +1250,7 @@ font-size:${h * 0.024 * 0.75}px;
                 initBtnsEvents();
                 initDialog();
                 initHotKey();
+                initMediaSession();
                 if(config.PERFORMANCE_MODE)initPerformanceMode();
                 if(!config.TAG){
                     el.info.tags_f.style.display='none';    
