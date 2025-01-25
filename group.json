@@ -16,16 +16,16 @@
         ]
     },
     {
-        "name": "2024 年度歌单",
-        "desc": "2024 我特别喜欢的音乐都在这了。2024年是我的听歌风格多样化的时期，是成功告别了听歌“卖花担上看桃李”的时期，是让音乐承载了更多的个性和情感的时期。",
-        "img": "https://y.qq.com/music/photo_new/T002R800x800M000004cvR6e1MSb2b.jpg",
+        "name": "特别喜欢",
+        "desc": "我特别喜欢的音乐",
+        "img": "http://p1.music.126.net/y2JhDXDFqMKT31PVTopGUQ==/109951164496647934.jpg",
         "has": [
             "tag=特别喜欢"
         ]
     },
     {
         "name": "日文 精选集",
-        "desc": "正在逐渐接受日文歌曲中。。。",
+        "desc": "我听不懂，但日本的一些流行音乐作曲确实好",
         "img": "https://p1.music.126.net/rO-NRerWNFHke7whEJRJbg==/109951166940350080.jpg",
         "has": [
             "tag=日文"
@@ -56,6 +56,14 @@
         ]
     },
     {
+        "name": "初音未来 精选集",
+        "desc": "虽然我不是初音的铁杆粉丝，但初音唱歌确实好听",
+        "img": "http://p1.music.126.net/JwNOB4fOcpaJGPMChNVvXg==/109951163051193713.jpg",
+        "has": [
+            "tag=miku"
+        ]
+    },
+    {
         "name": "纯音乐",
         "desc": "纯音乐，享受音乐本身",
         "img": "https://p2.music.126.net/wuBe3K5odyEqZBLZNkXNlg==/109951163855629724.jpg",
@@ -71,7 +79,10 @@
             "tag=Phigros",
             "tag=律动轨迹",
             "tag=旋转音律",
-            "tag=cytus"
+            "tag=cytus",
+            "tag=音游",
+            "tag=喵斯",
+            "tag=Arc"
         ]
     },
     {
