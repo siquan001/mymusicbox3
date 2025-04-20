@@ -353,7 +353,7 @@ var sp = {
              * @author BrownHu
              * @link https://juejin.cn/post/6844903678231445512
              * @from 稀土掘金
-             * @note 对于一些地方做了修改和适配，对无法获取的图片使用https://api.qjqq.cn/api/Imgcolor siquan001
+             * @note 对于一些地方做了修改和适配，对无法获取的图片使用https://api.istero.com/resource/images/base64 siquan001
              */
         colorfulImg:function(img,cb){
             let imgEl = document.createElement('img');
@@ -400,25 +400,13 @@ var sp = {
                 d();
             }
             function d() {
-                sp.player.rs.push(musicapi._request('https://api.qjqq.cn/api/Imgcolor?img=' + img, function (n) {
+                if(img.indexOf('http')==-1)return cb('rgba(0,0,0,0)', -1);
+                sp.player.rs.push(musicapi._request('https://api.istero.com/resource/images/base64?token=cea92925700321ef4aeeb515d999e651&url=' + img, function (n) {
                     if (!n) {
                         cb('rgba(0,0,0,0)', -1);
                     } else {
-                        var h = n.RGB.slice(1);
-                        var r = parseInt(h.substring(0, 2), 16);
-                        var g = parseInt(h.substring(2, 4), 16);
-                        var b = parseInt(h.substring(4, 6), 16);
-                        var rgb={r,g,b};
-                        var m=(rgb.r + rgb.g + rgb.b) / 3 > 150;
-                        function ccl(c){
-                            return 256-(256-c)/2;
-                        }
-                        var m2=(rgb.r/2)+','+(rgb.g/2)+','+(rgb.b/2);
-                        var m3=ccl(rgb.r)+','+ccl(rgb.g)+','+ccl(rgb.b);
-                        // if((rgb.r + rgb.g + rgb.b) / 1.5 < 150){
-                        //     m3='255,255,255';
-                        // }
-                        cb('rgba(' + rgb.r + ',' + rgb.g + ',' + rgb.b + ',.5)', m,[['rgb('+m2+')','rgba('+m2+',.5)'],['rgb('+m3+')','rgba('+m3+',.5)']]);
+                        var base64 = n.data.base64;
+                        sp.player.colorfulImg(base64, cb);
                     }
                 }));
             }
@@ -781,6 +769,12 @@ font-size:${h * 0.024 * 0.75}px;
                 el.info.pj.innerText=sp.infolist[m.mid]||'暂无';
             }
 
+            var lrcs={
+                trans:{},
+                y:{},
+                entrans:false
+            }
+
             // 获取并设置歌曲信息
             function setSongData(i) {
                 var m=sp.player.musiclist[i];
@@ -809,6 +803,15 @@ font-size:${h * 0.024 * 0.75}px;
                         el.album.innerText = el.info.album.innerText = data.album;
                         el.singer.innerText = el.info.singer.innerText = data.artist;
                         LRC = data.lrc;
+                        lrcs.trans = data.trans;
+                        lrcs.y = data.lrc;
+                        if(!data.transstr){
+                            el.transBtn.style.display='none';
+                        }else{
+                            el.transBtn.style.display='';
+                        }
+                        lrcs.entrans=false;
+                        
                         if(data.lrcstr==''||data.nolrc){
                             if(m.tag&&m.tag.indexOf('纯音乐')!=-1){
                                 LRC={0:'纯音乐，请欣赏'}
@@ -1153,6 +1156,18 @@ font-size:${h * 0.024 * 0.75}px;
                         el.fullBtn.querySelector('.full').style.display='none';
                     }
                 })
+
+                el.transBtn.addEventListener('click', function () {
+                    if(lrcs.entrans){
+                        LRC=lrcs.y;
+                        lrcs.entrans=false;
+                        xrLRC();
+                    }else{
+                        LRC=lrcs.trans;
+                        lrcs.entrans=true;
+                        xrLRC();
+                    }
+                })
             }
 
             // 对话框事件
@@ -1197,7 +1212,7 @@ font-size:${h * 0.024 * 0.75}px;
                     activing = false;
                 }
                 window.onblur = function () {
-                    document.title = "[性能模式冻结中]" + _title;
+                    document.title = "[❉] " + _title;
                     el.img.style.animationPlayState = "paused"
                     $_(".playing-anim").style.display = "none";
                     activing = true;
@@ -1228,6 +1243,7 @@ font-size:${h * 0.024 * 0.75}px;
                 nextbtn:$_(".nextbtn"),
                 switchBtn:$_(".sx"),
                 fullBtn:$_(".full"),
+                transBtn:$_(".trans"),
                 mode:$_(".mode"),
                 musiclistbtn:$_("#siquan-player-musiclist"),
                 musicinfobtn:$_("#siquan-player-musicinfo"),
@@ -1265,7 +1281,7 @@ font-size:${h * 0.024 * 0.75}px;
             }
 
             //标题缓存（用于性能模式）
-            var _title="我的音乐盒子";
+            var _title=document.title;
             var isStopBlurBg=false;
             var LRC={0:'歌词加载中'};
             var defimg='https://image.gumengya.com/i/2023/10/15/652b46cf15392.png';

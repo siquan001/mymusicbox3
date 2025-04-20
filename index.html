@@ -8,11 +8,12 @@
     <title>雨竹音乐盒</title>
     <link rel="stylesheet" href="index-min.css">
     <link rel="stylesheet" href="./player-min.css">
-    <style id="resizer"></style>
-    <style id="f"></style>
+    
 </head>
 
 <body>
+    <style id="resizer"></style>
+    <style id="f"></style>
     <div class="bg">
         <div class="mbg">
             <img src="" alt="">
@@ -23,13 +24,33 @@
         <h1>雨竹音乐盒</h1>
         <div class="state loading">正在初始化...</div>
         <div class="moebeian">
-            <a href="https://icp.gov.moe/?keyword=20240945" target="_blank">萌ICP备20240945号</a>
+            <script>
+                if(window.location.href.indexOf('siquan001.github.io')!=-1){
+                    document.write('<a href="https://icp.gov.moe/?keyword=20240945" target="_blank">萌ICP备20240945号</a>')
+                }else if(window.location.href.indexOf('siquan.42web.io')!=-1){
+                    document.write('<a href="https://icp.gov.moe/?keyword=20240954" target="_blank">萌ICP备20240954号</a>')
+                }else if(window.location.href.indexOf('127.0.0.1')!=-1){
+                    document.write('<span class="mbn">开发中</span>')
+                }else{
+                    document.write('<span class="mbn">你可能在访问盗版网站！<a href="https://siquan001.github.io/">回到主站</a></span>')
+                }
+            </script>
         </div>
     </div>
     <div class="page groups" style="display: none;">
         <div class="group-list"></div>
         <div class="moebeian">
-            <a href="https://icp.gov.moe/?keyword=20240945" target="_blank">萌ICP备20240945号</a>
+            <script>
+                if(window.location.href.indexOf('siquan001.github.io')!=-1){
+                    document.write('<a href="https://icp.gov.moe/?keyword=20240945" target="_blank">萌ICP备20240945号</a>')
+                }else if(window.location.href.indexOf('siquan.42web.io')!=-1){
+                    document.write('<a href="https://icp.gov.moe/?keyword=20240954" target="_blank">萌ICP备20240954号</a>')
+                }else if(window.location.href.indexOf('127.0.0.1')!=-1){
+                    document.write('<span class="mbn">开发中</span>')
+                }else{
+                    document.write('<span class="mbn">你可能在访问盗版网站！<a href="https://siquan001.github.io/">回到主站</a></span>')
+                }
+            </script>
         </div>
     </div>
     <div class="page songs" style="display: none;">
@@ -53,7 +74,17 @@
             </div>
         </div>
         <div class="moebeian">
-            <a href="https://icp.gov.moe/?keyword=20240945" target="_blank">萌ICP备20240945号</a>
+            <script>
+                if(window.location.href.indexOf('siquan001.github.io')!=-1){
+                    document.write('<a href="https://icp.gov.moe/?keyword=20240945" target="_blank">萌ICP备20240945号</a>')
+                }else if(window.location.href.indexOf('siquan.42web.io')!=-1){
+                    document.write('<a href="https://icp.gov.moe/?keyword=20240954" target="_blank">萌ICP备20240954号</a>')
+                }else if(window.location.href.indexOf('127.0.0.1')!=-1){
+                    document.write('<span class="mbn">开发中</span>')
+                }else{
+                    document.write('<span class="mbn">你可能在访问盗版网站！<a href="https://siquan001.github.io/">回到主站</a></span>')
+                }
+            </script>
         </div>
     </div>
     <div class="page player" style="display: none;">
@@ -131,6 +162,9 @@
                     <ul></ul>
                 </div>
                 <div class="flbtn">
+                    <div class="iconbtn trans">
+                        译
+                    </div>
                     <div class="iconbtn full">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="unfull" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707m4.344-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707"/>
@@ -199,7 +233,7 @@
             AUTOPLAY       : true,               // 自动播放
             START_PLAY     : 'random',            // 刚开始的播放策略，可选 random 随机播放，first 第一首播放
             PLAY_MODE      : 'loop',             // 播放模式，可选 loop 单曲循环，random 随机播放，order 顺序播放
-            PERFORMANCE_MODE:false,               // 性能模式，在页面失焦时取消动画和歌词更新和时间更新(针对一些配置较差的电脑进行后台播放)
+            PERFORMANCE_MODE:true,               // 性能模式，在页面失焦时取消动画和歌词更新和时间更新(针对一些配置较差的电脑进行后台播放)
             BLURBG         : location.hash.indexOf('noblur')==-1,              // 是否显示模糊图片背景(这对配置较差的电脑是个挑战)
             MAINCOLORBG    : true,              // 是否以歌曲封面图片主题色作为背景
             MAINCOLORPLUS  : true              // 是否以歌曲封面图片主题色作为文字颜色
