@@ -353,7 +353,7 @@ var sp = {
              * @author BrownHu
              * @link https://juejin.cn/post/6844903678231445512
              * @from 稀土掘金
-             * @note 对于一些地方做了修改和适配，对无法获取的图片使用https://api.istero.com/resource/images/base64 siquan001
+             * @note 对于一些地方做了修改和适配，对无法获取的图片使用'https://uapis.cn/api/imgbase?url= siquan001
              */
         colorfulImg:function(img,cb){
             let imgEl = document.createElement('img');
@@ -401,11 +401,11 @@ var sp = {
             }
             function d() {
                 if(img.indexOf('http')==-1)return cb('rgba(0,0,0,0)', -1);
-                sp.player.rs.push(musicapi._request('https://api.istero.com/resource/images/base64?token=cea92925700321ef4aeeb515d999e651&url=' + img, function (n) {
+                sp.player.rs.push(musicapi._request('https://uapis.cn/api/imgbase?url=' + img, function (n) {
                     if (!n) {
                         cb('rgba(0,0,0,0)', -1);
                     } else {
-                        var base64 = n.data.base64;
+                        var base64 = "data:image/jpeg;base64,"+n.base64;
                         sp.player.colorfulImg(base64, cb);
                     }
                 }));
