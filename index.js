@@ -1284,7 +1284,7 @@ font-size:${h * 0.024 * 0.75}px;
             var _title=document.title;
             var isStopBlurBg=false;
             var LRC={0:'歌词加载中'};
-            var defimg='https://image.gumengya.com/i/2023/10/15/652b46cf15392.png';
+            var defimg='https://image.gmya.net/i/2023/10/15/652b46cf15392.png';
             // 页面主题
             var mode;
             var el;
